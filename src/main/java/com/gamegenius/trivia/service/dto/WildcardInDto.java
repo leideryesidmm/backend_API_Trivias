@@ -7,4 +7,5 @@ public class WildcardInDto {
     private int idWildcard;
     private String name;
     private String description;
+    private int cost;
 }

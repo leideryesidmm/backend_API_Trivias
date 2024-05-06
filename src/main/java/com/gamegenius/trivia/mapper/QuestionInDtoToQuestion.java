@@ -19,6 +19,7 @@ public class QuestionInDtoToQuestion implements IMapper<QuestionInDto, Question>
         question.setIdQuestion(in.getIdQuestion());
         question.setDescription(in.getDescription());
         question.setTypeQuestion(in.getTypeQuestion());
+        question.setDificultad(in.getDificultad());
         question.setTime(in.getTime());
         if(in.getSubCategory()!=null)
             question.setSubCategory(this.mapperSubCategory.map(in.getSubCategory()));
@@ -30,6 +31,7 @@ public class QuestionInDtoToQuestion implements IMapper<QuestionInDto, Question>
         questionInDto.setIdQuestion(in.getIdQuestion());
         questionInDto.setDescription(in.getDescription());
         questionInDto.setTypeQuestion(in.getTypeQuestion());
+        questionInDto.setDificultad(in.getDificultad());
         questionInDto.setTime(in.getTime());
         if(in.getSubCategory()!=null)
             questionInDto.setSubCategory(this.mapperSubCategory.map2(in.getSubCategory()));

@@ -26,9 +26,11 @@ public class UserService {
     }
 
     public UserInDto createUser(UserInDto userInDto){
+        userInDto.setBombicoins(50);
         User user = mapper.map(userInDto);
         user=this.repository.save(user);
         userInDto = this.mapper.map2(user);
+        this.userWildcardService.initializeWildcard(userInDto);
         return userInDto;
     }
     public UserInDto getUser(String id){
@@ -45,6 +47,39 @@ public class UserService {
         }
         return userInDtos;
     }
+    @Transactional
+    public ResponseEntity addBombicoins(long id, int amountToAdd) {
+        try {
+                User user = this.repository.findById(id).orElse(null);
+            if (user != null) {
+                long newAmount = user.getBombicoins() + amountToAdd;
+                this.repository.subtractOrAddBombiCoins(id, newAmount);
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @Transactional
+    public ResponseEntity subtractBombicoins(long id, int amountToAdd) {
+        try {
+            User user = this.repository.findById(id).orElse(null);
+            if (user != null) {
+                long newAmount = user.getBombicoins() - amountToAdd;
+                this.repository.subtractOrAddBombiCoins(id, newAmount);
+                return ResponseEntity.noContent().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
     public List<UserInDto> createTestDataUser(){
         try{
             List<UserInDto> userInDtos=new ArrayList<>();
@@ -60,9 +95,6 @@ public class UserService {
             userInDto.setBirthdate(birthdate);
 
             userInDtos.add(createUser(userInDto));
-            System.out.println("use");
-            System.out.println(userInDto);
-            this.userWildcardService.initializeWildcard(userInDtos.get(userInDtos.size()-1));
 
             userInDto=new UserInDto();
             userInDto.setIdAuth("100047014089194065785");
@@ -76,7 +108,6 @@ public class UserService {
             userInDto.setBirthdate(birthdate);
 
             userInDtos.add(createUser(userInDto));
-            this.userWildcardService.initializeWildcard(userInDtos.get(userInDtos.size()-1));
             return userInDtos;
         }catch (Exception e){
             System.out.println(e.getMessage());

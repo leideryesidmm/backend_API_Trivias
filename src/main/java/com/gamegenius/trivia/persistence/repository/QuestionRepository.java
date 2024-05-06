@@ -10,6 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-    @Query("SELECT s FROM Question s WHERE s.subCategory.idSubCategory = :id ORDER BY FUNCTION('RAND') DESC")
-    List<Question> findQuestionRandom(@Param("id") long id);
+    @Query("SELECT s FROM Question s WHERE s.subCategory.idSubCategory = :id AND s.dificultad = :dificultad ORDER BY FUNCTION('RAND') DESC")
+    List<Question> findQuestionRandom(@Param("id") long id, @Param("dificultad") short dificultad);
 }

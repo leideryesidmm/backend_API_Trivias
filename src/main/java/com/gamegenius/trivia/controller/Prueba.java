@@ -80,10 +80,10 @@ public class Prueba {
         return ResponseEntity.ok(questionInDto);
     }
 
-    @GetMapping("/Question/Random/{id}")
-    public ResponseEntity<QuestionInDto> getQuestionRandom(@PathVariable("id") long id){
+    @GetMapping("/Question/Random/{id},{dificultad}")
+    public ResponseEntity<QuestionInDto> getQuestionRandom(@PathVariable("id") long id, @PathVariable("dificultad") short dificultad){
         try {
-            QuestionInDto questionInDto = this.questionService.getQuestionRamdon(id);
+            QuestionInDto questionInDto = this.questionService.getQuestionRamdon(id,dificultad);
             questionInDto.setAnswers(this.answerService.getAllAnswer(questionInDto.getIdQuestion()));
             System.out.println(questionInDto);
 
@@ -155,6 +155,27 @@ public class Prueba {
     public ResponseEntity addAmount(@PathVariable("id") long id, @PathVariable("amount") int amount){
         try{
             ResponseEntity responseEntity=this.userWildcardService.addAmount(id,amount);
+            return responseEntity;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
+    @PatchMapping("/User/Bombicoins/Add/{id},{amount}")
+    public ResponseEntity addBombicoins(@PathVariable("id") long id, @PathVariable("amount") int amount){
+        try{
+            ResponseEntity responseEntity=this.userService.addBombicoins(id,amount);
+            return responseEntity;
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+    @PatchMapping("/User/Bombicoins/subtract/{id},{amount}")
+    public ResponseEntity subtractBombicoins(@PathVariable("id") long id, @PathVariable("amount") int amount){
+        try{
+            ResponseEntity responseEntity=this.userService.subtractBombicoins(id,amount);
             return responseEntity;
         }catch (Exception e){
             System.out.println(e.getMessage());

@@ -15,4 +15,5 @@ public class QuestionInDto {
     private int time;
     private TypeQuestion typeQuestion;
     private List<AnswerInDto> answers;
+    private short dificultad;
 }

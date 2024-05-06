@@ -20,4 +20,5 @@ public class Question {
     @ManyToOne
     @JoinColumn(name="typeQuestion")
     private TypeQuestion typeQuestion;
+    private short dificultad;
 }

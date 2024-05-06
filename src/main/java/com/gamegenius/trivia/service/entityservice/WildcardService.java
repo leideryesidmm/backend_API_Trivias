@@ -46,18 +46,22 @@ public class WildcardService {
         //Escudo
         wildcardInDto.setName("Escudo");
         wildcardInDto.setDescription("Protege tus puntos. No perderás puntos si respondes incorrectamente mientras este comodín esté activo.");
+        wildcardInDto.setCost(40);
         wildcardInDtos.add(createWildcard(wildcardInDto));
         //Reloj
         wildcardInDto.setName("Reloj");
         wildcardInDto.setDescription("Gana tiempo extra. Añade tiempo al temporizador para tener más tiempo para responder.(10 seg)");
+        wildcardInDto.setCost(25);
         wildcardInDtos.add(createWildcard(wildcardInDto));
         //50/50
         wildcardInDto.setName("50/50");
         wildcardInDto.setDescription("Reduce las opciones. Elimina dos respuestas incorrectas, dejándote con una mejor chance de elegir la correcta.");
+        wildcardInDto.setCost(30);
         wildcardInDtos.add(createWildcard(wildcardInDto));
         //Salto
         wildcardInDto.setName("Salto");
         wildcardInDto.setDescription("Avanza rápidamente. Salta la pregunta actual y pasa a la siguiente sin perder puntos ni tiempo.");
+        wildcardInDto.setCost(30);
         wildcardInDtos.add(createWildcard(wildcardInDto));
         return wildcardInDtos;
     }
