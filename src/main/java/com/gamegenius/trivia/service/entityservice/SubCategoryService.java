@@ -49,6 +49,23 @@ public class SubCategoryService {
             return null;
         }
     }
+    public List<SubCategoryInDto> getAllSubCategorys(){
+        try {
+            System.out.println("entra");
+            List<SubCategory> subCategorys = this.repository.findAll();
+            System.out.println(subCategorys);
+            List<SubCategoryInDto> subCategoryInDtos = new ArrayList<>();
+            for (SubCategory subCategory : subCategorys) {
+                SubCategoryInDto subCategoryInDto = this.mapper.map2(subCategory);
+                subCategoryInDtos.add(subCategoryInDto);
+            }
+            System.out.println(subCategoryInDtos);
+            return subCategoryInDtos;
+        }catch (Exception e) {
+            System.out.println(e.getMessage());
+            return null;
+        }
+    }
     public List<SubCategory> createTestDataSubCaregory(){
         try{
             SubCategoryInDto subCategoryInDto = new SubCategoryInDto();

@@ -12,6 +12,7 @@ public class CategoryInDtoToCategory implements IMapper<CategoryInDto, Category>
         category.setIdCategory(in.getIdCategory());
         category.setName(in.getName());
         category.setDescription(in.getDescription());
+        category.setPathImg(in.getPathImg());
         return category;
     }
     @Override
@@ -20,6 +21,7 @@ public class CategoryInDtoToCategory implements IMapper<CategoryInDto, Category>
         categoryInDto.setIdCategory(in.getIdCategory());
         categoryInDto.setName(in.getName());
         categoryInDto.setDescription(in.getDescription());
+        categoryInDto.setPathImg(in.getPathImg());
         return categoryInDto;
     }
 }

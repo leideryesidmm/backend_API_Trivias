@@ -65,7 +65,7 @@ public class QuestionService {
             QuestionInDto question = new QuestionInDto();
             List<Question> questions=new ArrayList<>();
             SubCategoryInDto subCategory=new SubCategoryInDto();
-            subCategory.setIdSubCategory(5);
+            subCategory.setIdSubCategory(3);
 
             // Pregunta 1
             question.setSubCategory(subCategory);

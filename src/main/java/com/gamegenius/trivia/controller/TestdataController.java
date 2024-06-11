@@ -77,4 +77,20 @@ public class TestdataController {
             return ResponseEntity.ok(wildcardInDtos);
         else return ResponseEntity.internalServerError().build();
     }
+    @PostMapping("/Inicial")
+    public ResponseEntity inicializerData(){
+        try{
+            createCategoryTestData();
+            createSubCategoryTestData();
+            createQuestionTestData();
+            createAnswerTestData();
+            createWildcardsTestData();
+            createUserTestData();
+            return ResponseEntity.ok().build();
+        }catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
+    }
+
 }

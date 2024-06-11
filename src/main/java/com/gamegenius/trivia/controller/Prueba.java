@@ -1,8 +1,14 @@
 package com.gamegenius.trivia.controller;
 
 import com.gamegenius.trivia.persistence.entity.*;
+import com.gamegenius.trivia.service.chatgppt.ChatGPTService;
 import com.gamegenius.trivia.service.dto.*;
 import com.gamegenius.trivia.service.entityservice.*;
+import com.gamegenius.trivia.service.googleapi.ApiService;
+import com.gamegenius.trivia.service.util.Format;
+import io.github.flashvayne.chatgpt.dto.ChatRequest;
+import io.github.flashvayne.chatgpt.dto.ChatResponse;
+import io.github.flashvayne.chatgpt.service.ChatgptService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,20 +18,30 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/public")
 public class Prueba {
+    private final Format format;
+    private final ApiService apiService;
+    private final ChatgptService chatgptService;
+    private final ChatGPTService chatGPTService;
     private final CategoryService categoryService;
     private final SubCategoryService subCategoryService;
     private final QuestionService questionService;
     private final AnswerService answerService;
     private final UserService userService;
     private final UserWildcardService userWildcardService;
+    private final ScoreService scoreService;
 
-    public Prueba(CategoryService categoryService, SubCategoryService subCategoryService, QuestionService questionService, AnswerService answerService, UserService userService, UserWildcardService userWildcardService) {
+    public Prueba(Format format, ApiService apiService, ChatgptService chatgptService, ChatGPTService chatGPTService, CategoryService categoryService, SubCategoryService subCategoryService, QuestionService questionService, AnswerService answerService, UserService userService, UserWildcardService userWildcardService, ScoreService scoreService) {
+        this.format = format;
+        this.apiService = apiService;
+        this.chatgptService = chatgptService;
+        this.chatGPTService = chatGPTService;
         this.categoryService = categoryService;
         this.subCategoryService = subCategoryService;
         this.questionService = questionService;
         this.answerService = answerService;
         this.userService = userService;
         this.userWildcardService = userWildcardService;
+        this.scoreService = scoreService;
     }
 
     @PostMapping("/Category")
@@ -80,7 +96,7 @@ public class Prueba {
         return ResponseEntity.ok(questionInDto);
     }
 
-    @GetMapping("/Question/Random/{id},{dificultad}")
+    @GetMapping("/Question/Random2/{id},{dificultad}")
     public ResponseEntity<QuestionInDto> getQuestionRandom(@PathVariable("id") long id, @PathVariable("dificultad") short dificultad){
         try {
             QuestionInDto questionInDto = this.questionService.getQuestionRamdon(id,dificultad);
@@ -109,6 +125,7 @@ public class Prueba {
     }
     @PostMapping("/User")
     public ResponseEntity<UserInDto> createUser(@RequestBody UserInDto userInDto){
+        System.out.println("entroooooooooooooooooooooooooooooooooooooooooo");
         userInDto=this.userService.createUser(userInDto);
         if(userInDto!=null)
             return ResponseEntity.ok(userInDto);
@@ -119,7 +136,19 @@ public class Prueba {
         UserInDto userInDto=this.userService.getUser(idAuth);
         if(userInDto!=null)
             return ResponseEntity.ok(userInDto);
-        else return ResponseEntity.internalServerError().build();
+        else return ResponseEntity.noContent().build();
+    }
+    @PatchMapping("/User/Score/{idUser},{idSubCategory},{score}")
+    public ResponseEntity unlockWildcard(@PathVariable("idUser") long idUser,
+                                         @PathVariable("idSubCategory") long idSubCategory,
+                                         @PathVariable("score") long score){
+        try{
+            this.scoreService.newMaxScore(idUser,idSubCategory,score);
+            return ResponseEntity.noContent().build();
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
     }
     @GetMapping("/User/Wildcard/{id}")
     public ResponseEntity<List<UserWildcardInDto>> getUserWildcards(@PathVariable("id") long id){
@@ -182,4 +211,35 @@ public class Prueba {
             return ResponseEntity.internalServerError().build();
         }
     }
+
+    @GetMapping("/chatgpt/mensage")
+    public String getMenssage(@RequestParam String message){
+        System.out.println(message);
+        return chatgptService.sendMessage(message);
+    }
+    @GetMapping("/chatgpt/prompt")
+    public ChatResponse prompt(@RequestParam String message){
+        Integer maxTokens = 300;
+        String model = "gpt-3.5-turbo";
+        Double temperature = 0.5;
+        Double topP = 1.0;
+        ChatRequest chatRequest = new ChatRequest(model,message,maxTokens,temperature,topP);
+        ChatResponse res = chatgptService.sendChatRequest(chatRequest);
+        System.out.println("Response was: "+res.toString());
+        return res;
+    }
+    @GetMapping("/Question/Random/{id},{dificulty}")
+    public String getQuestion(@PathVariable("id") long id, @PathVariable("dificulty") short dificulty){
+        try{
+            SubCategoryInDto subCategory=this.subCategoryService.getSubCategory(id);
+            String resul=apiService.generateContent(subCategory.getCategory().getName(),subCategory.getName(),dificulty);
+            resul=format.formatJsonQuestion(resul);
+            return resul;
+
+        }catch (Exception exception){
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
 }

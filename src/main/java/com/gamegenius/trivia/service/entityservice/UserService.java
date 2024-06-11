@@ -2,7 +2,6 @@ package com.gamegenius.trivia.service.entityservice;
 
 import com.gamegenius.trivia.mapper.UserInDtoToUser;
 import com.gamegenius.trivia.persistence.entity.User;
-import com.gamegenius.trivia.persistence.entity.UserWildcard;
 import com.gamegenius.trivia.persistence.repository.UserRepository;
 import com.gamegenius.trivia.service.dto.UserInDto;
 import org.springframework.http.ResponseEntity;
@@ -18,11 +17,13 @@ public class UserService {
     private final UserRepository repository;
     private final UserInDtoToUser mapper;
     private final UserWildcardService userWildcardService;
+    private final ScoreService scoreService;
 
-    public UserService(UserRepository repository, UserInDtoToUser mapper, UserWildcardService userWildcardService) {
+    public UserService(UserRepository repository, UserInDtoToUser mapper, UserWildcardService userWildcardService, ScoreService scoreService) {
         this.repository = repository;
         this.mapper = mapper;
         this.userWildcardService = userWildcardService;
+        this.scoreService = scoreService;
     }
 
     public UserInDto createUser(UserInDto userInDto){
@@ -31,12 +32,18 @@ public class UserService {
         user=this.repository.save(user);
         userInDto = this.mapper.map2(user);
         this.userWildcardService.initializeWildcard(userInDto);
+        this.scoreService.initializeScores(userInDto);
         return userInDto;
     }
     public UserInDto getUser(String id){
         User user =this.repository.getByIdAuth(id);
-        UserInDto userInDto=this.mapper.map2(user);
-        return userInDto;
+        System.out.println(user);
+        UserInDto userInDto=new UserInDto();
+        if(user!=null){
+            userInDto=this.mapper.map2(user);
+            return userInDto;
+        }
+        else{return null;}
     }
     public List<UserInDto> getAllUser(){
         List<User> users =this.repository.findAll();

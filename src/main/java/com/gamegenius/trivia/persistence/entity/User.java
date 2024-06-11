@@ -13,6 +13,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "idAuth",unique = true)
     private String idAuth;
     private String user;
     private String nickname;
