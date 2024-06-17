@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 public class Format {
     public String formatJsonQuestion(String s){
         try {
+            System.out.println(s);
             String formated = "";
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(s);

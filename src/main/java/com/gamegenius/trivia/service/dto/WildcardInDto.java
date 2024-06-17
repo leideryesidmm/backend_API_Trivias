@@ -8,4 +8,5 @@ public class WildcardInDto {
     private String name;
     private String description;
     private int cost;
+    private String icon;
 }

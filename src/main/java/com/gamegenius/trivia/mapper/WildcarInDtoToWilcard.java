@@ -13,6 +13,7 @@ public class WildcarInDtoToWilcard implements IMapper<WildcardInDto, Wildcard>{
         wildcard.setName(in.getName());
         wildcard.setDescription(in.getDescription());
         wildcard.setCost(in.getCost());
+        wildcard.setIcon(in.getIcon());
         return wildcard;
     }
     @Override
@@ -22,6 +23,7 @@ public class WildcarInDtoToWilcard implements IMapper<WildcardInDto, Wildcard>{
         wildcardInDto.setName(in.getName());
         wildcardInDto.setDescription(in.getDescription());
         wildcardInDto.setCost(in.getCost());
+        wildcardInDto.setIcon(in.getIcon());
         return wildcardInDto;
     }
 }

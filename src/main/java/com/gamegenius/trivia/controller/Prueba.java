@@ -114,7 +114,7 @@ public class Prueba {
     public ResponseEntity<Answer> createAnswer(@RequestBody AnswerInDto answerInDto){
         Answer answer=this.answerService.createAnswer(answerInDto);
         if(answer!=null)
-        return ResponseEntity.ok(answer);
+            return ResponseEntity.ok(answer);
         else return ResponseEntity.internalServerError().build();
     }
     @GetMapping("/Answer/{id}")
@@ -173,7 +173,7 @@ public class Prueba {
         try{
             ResponseEntity responseEntity=this.userWildcardService.subtractAmount(id);
             if(responseEntity.getStatusCode() == HttpStatus.OK || responseEntity.getStatusCode() == HttpStatus.NO_CONTENT)
-               responseEntity= this.userWildcardService.addTotalUsed(id);
+                responseEntity= this.userWildcardService.addTotalUsed(id);
             return responseEntity;
         }catch (Exception e){
             System.out.println(e.getMessage());

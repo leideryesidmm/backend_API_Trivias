@@ -14,4 +14,5 @@ public class Wildcard {
     private String name;
     private String description;
     private int cost;
+    private String icon;
 }
