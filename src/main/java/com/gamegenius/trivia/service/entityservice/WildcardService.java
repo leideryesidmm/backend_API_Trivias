@@ -30,14 +30,22 @@ public class WildcardService {
         WildcardInDto wildcardInDto=this.mapper.map2(wildcard);
         return wildcardInDto;
     }
-    public List<WildcardInDto> getAllWildcard(){
-        List<Wildcard> wildcards =this.repository.findAll();
-        List<WildcardInDto> wildcardInDtos = new ArrayList<>();
-        for (Wildcard wildcard:wildcards) {
-            WildcardInDto wildcardInDto=this.mapper.map2(wildcard);
-            wildcardInDtos.add(wildcardInDto);
+    public List<WildcardInDto> getAllWildcard() {
+        try {
+            List<Wildcard> wildcards = this.repository.findAll();
+            List<WildcardInDto> wildcardInDtos = new ArrayList<>();
+            for (Wildcard wildcard : wildcards) {
+                WildcardInDto wildcardInDto = this.mapper.map2(wildcard);
+                wildcardInDtos.add(wildcardInDto);
+            }
+            return wildcardInDtos;
+        } catch (Exception e) {
+            // Log the exception
+            // Logger can be used here instead of System.out.println
+            System.out.println("Error retrieving wildcards: " + e.getMessage());
+            // Throw a custom exception if needed
+            return null;
         }
-        return wildcardInDtos;
     }
     public List<WildcardInDto> createTestWildcard(){
         List<WildcardInDto> wildcardInDtos=new ArrayList<>();

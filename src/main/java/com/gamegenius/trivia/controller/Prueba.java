@@ -27,10 +27,11 @@ public class Prueba {
     private final QuestionService questionService;
     private final AnswerService answerService;
     private final UserService userService;
+    private final WildcardService wildcardService;
     private final UserWildcardService userWildcardService;
     private final ScoreService scoreService;
 
-    public Prueba(Format format, ApiService apiService, ChatgptService chatgptService, ChatGPTService chatGPTService, CategoryService categoryService, SubCategoryService subCategoryService, QuestionService questionService, AnswerService answerService, UserService userService, UserWildcardService userWildcardService, ScoreService scoreService) {
+    public Prueba(Format format, ApiService apiService, ChatgptService chatgptService, ChatGPTService chatGPTService, CategoryService categoryService, SubCategoryService subCategoryService, QuestionService questionService, AnswerService answerService, UserService userService, WildcardService wildcardService, UserWildcardService userWildcardService, ScoreService scoreService) {
         this.format = format;
         this.apiService = apiService;
         this.chatgptService = chatgptService;
@@ -40,6 +41,7 @@ public class Prueba {
         this.questionService = questionService;
         this.answerService = answerService;
         this.userService = userService;
+        this.wildcardService = wildcardService;
         this.userWildcardService = userWildcardService;
         this.scoreService = scoreService;
     }
@@ -150,7 +152,20 @@ public class Prueba {
             return ResponseEntity.internalServerError().build();
         }
     }
-    @GetMapping("/User/Wildcard/{id}")
+
+    @GetMapping("/wildcard")
+    public ResponseEntity<List<WildcardInDto>> getWildcards(){
+        try {
+            List<WildcardInDto> wildcards = wildcardService.getAllWildcard();
+            return new ResponseEntity<>(wildcards, HttpStatus.OK);
+        } catch (Exception e) {
+            // Log the exception
+            // Logger can be used here instead of System.out.println
+            System.out.println("Unexpected exception: " + e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    @GetMapping("/user/wildcard/{id}")
     public ResponseEntity<List<UserWildcardInDto>> getUserWildcards(@PathVariable("id") long id){
         List<UserWildcardInDto> userWildcardInDtos=this.userWildcardService.getUserWildcards(id);
         if(userWildcardInDtos!=null)
