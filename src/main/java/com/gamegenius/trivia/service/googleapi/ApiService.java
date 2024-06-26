@@ -45,7 +45,7 @@ public class ApiService {
 
         Map<String, Object> parts = new HashMap<>();
         parts.put("text", "" +
-                "Write a random question about the "+category+" category, the "+subCategory+" subcategory, with "+dificultadS+" dificult. With 4 answers, 1 correct answer and 3 incorrect answers. That the format is of type json With the question, answers property that is a list and each answer has a boolean that indicates whether it is correct or incorrect,please let the boolean have \"correct\" as the property name in the json. If the question or answers have prohibited words, please you must change them to synonymus that aren't prihibited" +
+                "write a random question in Spanish about the "+category+" category, the "+subCategory+" subcategory, with "+dificultadS+" dificult. With 4 answers, 1 correct answer and 3 incorrect answers. That the format is of type json With the question, answers property that is a list and each answer has a boolean that indicates whether it is correct or incorrect,please let the boolean have \"correct\" as the property name in the json. If the question or answers have prohibited words, please you must change them to synonymus that aren't prihibited" +
                 "");
 
         Map<String, Object> contents = new HashMap<>();
