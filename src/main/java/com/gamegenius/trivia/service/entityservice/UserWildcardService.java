@@ -95,7 +95,7 @@ public class UserWildcardService {
             UserWildcard userWildcard = this.repository.findById(id).orElse(null);
             if (userWildcard != null) {
                 int newAmount = userWildcard.getAmount() + amountToAdd;
-                this.repository.subtractOrAdd(id, newAmount);
+                this.repository.subtractOrAdd(userWildcard.getIdUserWildcard(), newAmount);
                 return ResponseEntity.noContent().build();
             } else {
                 return ResponseEntity.notFound().build();
