@@ -243,18 +243,18 @@ public class Prueba {
         System.out.println("Response was: "+res.toString());
         return res;
     }
-    @GetMapping("/Question/Random/{id},{dificulty}")
-    public String getQuestion(@PathVariable("id") long id, @PathVariable("dificulty") short dificulty){
-        try{
-            SubCategoryInDto subCategory=this.subCategoryService.getSubCategory(id);
-            String resul=apiService.generateContent(subCategory.getCategory().getName(),subCategory.getName(),dificulty);
-            resul=format.formatJsonQuestion(resul);
+    @PostMapping("/Question/Random/{id},{dificulty}")
+    public String getQuestion(@PathVariable("id") long id, @PathVariable("dificulty") short dificulty, @RequestBody String historyQuestions) {
+        try {
+            SubCategoryInDto subCategory = this.subCategoryService.getSubCategory(id);
+            String resul = apiService.generateContent(subCategory.getCategory().getName(), subCategory.getName(), dificulty, historyQuestions);
+            resul = format.formatJsonQuestion(resul);
             return resul;
-
-        }catch (Exception exception){
+        } catch (Exception exception) {
             exception.printStackTrace();
             return null;
         }
     }
+
 
 }

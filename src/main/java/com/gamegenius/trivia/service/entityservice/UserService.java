@@ -72,13 +72,17 @@ public class UserService {
     }
 
     @Transactional
-    public ResponseEntity subtractBombicoins(long id, int amountToAdd) {
+    public ResponseEntity subtractBombicoins(long id, int amountTosubtract) {
         try {
             User user = this.repository.findById(id).orElse(null);
             if (user != null) {
-                long newAmount = user.getBombicoins() - amountToAdd;
+                if(user.getBombicoins()>=amountTosubtract){
+                long newAmount = user.getBombicoins() - amountTosubtract;
                 this.repository.subtractOrAddBombiCoins(id, newAmount);
                 return ResponseEntity.noContent().build();
+                }else{
+                    return ResponseEntity.internalServerError().build();
+                }
             } else {
                 return ResponseEntity.notFound().build();
             }

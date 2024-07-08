@@ -23,7 +23,7 @@ public class ApiService {
         this.restTemplate = restTemplate;
     }
 
-    public String generateContent(String category, String subCategory, int dificulty) {
+    public String generateContent(String category, String subCategory, int dificulty, String historyQuestions) {
         String url = "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=" + apiKey;
         String dificultadS;
         switch (dificulty) {
@@ -45,7 +45,13 @@ public class ApiService {
 
         Map<String, Object> parts = new HashMap<>();
         parts.put("text", "" +
-                "write a random question in Spanish about the "+category+" category, the "+subCategory+" subcategory, with "+dificultadS+" dificult. With 4 answers, 1 correct answer and 3 incorrect answers. That the format is of type json With the question, answers property that is a list and each answer has a boolean that indicates whether it is correct or incorrect,please let the boolean have \"correct\" as the property name in the json. If the question or answers have prohibited words, please you must change them to synonymus that aren't prihibited" +
+                "write a random question in Spanish about the "+category+" category, the "+subCategory+" subcategory, with "+
+                dificultadS+" dificult. With 4 answers, 1 correct answer and 3 incorrect answers. That the format is of type "+
+                "json With the question, answers property that is a list and each answer has a boolean that indicates whether "+
+                "it is correct or incorrect,please let the boolean have \"correct\" as the property name in the json. "+
+                "If the question or answers have prohibited words, please you must change them to synonymus that aren't prohibited" +
+                "You should also skip the following questions or you can ask questions similar to these but not the same:"+
+                historyQuestions+
                 "");
 
         Map<String, Object> contents = new HashMap<>();
