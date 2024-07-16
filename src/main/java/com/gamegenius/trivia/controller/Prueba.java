@@ -255,6 +255,20 @@ public class Prueba {
             return null;
         }
     }
+    @PostMapping("/Question/Random/")
+    public String getQuestionCulturaGeneral(@RequestBody String historyQuestions) {
+        try {
+            CategoryInDto category = this.categoryService.getCategory(1);
+            List<CategoryInDto> categoryInDtos = this.categoryService.getAllCategory();
+            String resul = apiService.generateContent(category, historyQuestions, format.toStringCategorias(categoryInDtos));
+            resul = format.formatJsonQuestion(resul);
+            return resul;
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return null;
+        }
+    }
+
 
 
 }

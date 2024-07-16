@@ -2,7 +2,10 @@ package com.gamegenius.trivia.service.util;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gamegenius.trivia.service.dto.CategoryInDto;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class Format {
@@ -46,5 +49,13 @@ public class Format {
         e.printStackTrace();
         return null;
         }
+    }
+
+    public String toStringCategorias(List<CategoryInDto> categoryInDtos){
+        String toSring="";
+        for (CategoryInDto categoryInDto:categoryInDtos) {
+            toSring+=" "+categoryInDto.getName();
+        }
+        return toSring;
     }
 }

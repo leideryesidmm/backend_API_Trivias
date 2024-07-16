@@ -15,7 +15,7 @@
 	<name>trivia</name>
 	<description>Backend de la aplicación web de trivias</description>
 	<properties>
-		<java.version>17</java.version>
+		<java.version>11</java.version>
 	</properties>
 	<dependencies>
 		<dependency>

@@ -24,7 +24,6 @@ public class ScoreService {
     }
 
     public ScoreInDto createScore(ScoreInDto scoreInDto){
-        System.out.println(scoreInDto);
         Score score = mapper.map(scoreInDto);
         score=this.repository.save(score);
         scoreInDto=this.mapper.map2(score);
@@ -67,7 +66,6 @@ public class ScoreService {
                 ScoreInDto scoreInDto = new ScoreInDto();
                 scoreInDto.setSubCategory(subCategoryInDto);
                 scoreInDto.setUser(userInDto);
-                System.out.println(scoreInDto);
                 scores.add(createScore(scoreInDto));
             }
             return scores;

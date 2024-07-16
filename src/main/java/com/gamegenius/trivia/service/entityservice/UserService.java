@@ -27,7 +27,7 @@ public class UserService {
     }
 
     public UserInDto createUser(UserInDto userInDto){
-        userInDto.setBombicoins(50);
+        userInDto.setBombicoins(150);
         User user = mapper.map(userInDto);
         user=this.repository.save(user);
         userInDto = this.mapper.map2(user);

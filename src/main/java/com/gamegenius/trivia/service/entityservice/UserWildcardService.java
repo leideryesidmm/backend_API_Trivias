@@ -25,7 +25,6 @@ public class UserWildcardService {
         this.wildCardService = wildCardService;
     }
     public UserWildcardInDto createUserWildcard(UserWildcardInDto userWildcardInDto){
-        System.out.println(userWildcardInDto.getUser());
         UserWildcard userWildcard = mapper.map(userWildcardInDto);
         userWildcard=this.repository.save(userWildcard);
         userWildcardInDto=this.mapper.map2(userWildcard);
@@ -53,12 +52,10 @@ public class UserWildcardService {
                 UserWildcardInDto userWildcardInDto = new UserWildcardInDto();
                 userWildcardInDto.setWildcard(wildcardInDto);
                 userWildcardInDto.setUser(userInDto);
-                System.out.println(userWildcardInDto);
                 userWildcardInDtos.add(createUserWildcard(userWildcardInDto));
             }
             return userWildcardInDtos;
         }catch (Exception e){
-            System.out.println(e.getMessage());
             return null;
         }
     }
@@ -68,7 +65,6 @@ public class UserWildcardService {
             this.repository.unlocked(id,unlocked);
             return ResponseEntity.ok().build();
         }catch (Exception e){
-            System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().build();
         }
     }
