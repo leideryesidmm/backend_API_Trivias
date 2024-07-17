@@ -9,7 +9,6 @@ import java.util.List;
 
 @Service
 public class Format {
-
     public String formatJsonQuestion(String s) {
         try {
             System.out.println(s);
@@ -30,13 +29,13 @@ public class Format {
                 // Elimina los caracteres de escape innecesarios
                 String cleanedJsonString = textContent.replace("```json\\n", "")
                         .replace("\\n```", "")
-                        .replace("\\n", "")
+                        .replace("\\n", "\n")
                         .replace("\\\"", "\"")
                         .replace("```json", "")
                         .replace("```", "");
 
-                // Escapa las comillas dobles dentro del valor del texto
-                cleanedJsonString = cleanedJsonString.replace("\"", "\\\"");
+                // Escapa solo las comillas internas dentro del valor del texto
+                cleanedJsonString = cleanedJsonString.replaceAll("(?<!\\\\)\"", "\\\\\"");
 
                 // Parsear el string limpio a un objeto JSON para formatearlo
                 JsonNode cleanedJsonNode = objectMapper.readTree(cleanedJsonString);
@@ -54,6 +53,7 @@ public class Format {
             return null;
         }
     }
+
 
     public String toStringCategorias(List<CategoryInDto> categoryInDtos){
         String toSring="";
