@@ -51,7 +51,7 @@ public class ApiService {
                 dificultadS+" dificult. With 4 answers, 1 correct answer and 3 incorrect answers. That the format is of type "+
                 "json With the question, answers property that is a list and each answer has a boolean that indicates whether "+
                 "it is correct or incorrect,please let the boolean have \"correct\" as the property name in the json. "+
-                "Please for the json use ' and when you must make a reference, quote or some name, phrase or etc use \""+
+                "Please for the json use \" and when you must make a reference, quote or some name, phrase or etc use '"+
                 "If the question or answers have prohibited words, please you must change them to synonymus that aren't prohibited" +
                 "You should also skip the following questions or you can ask questions similar to these but not the same:"+
                 historyQuestions+

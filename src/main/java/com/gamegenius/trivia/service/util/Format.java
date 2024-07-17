@@ -9,10 +9,10 @@ import java.util.List;
 
 @Service
 public class Format {
-    public String formatJsonQuestion(String s) {
+    public String formatJsonQuestion(String s){
         try {
             System.out.println(s);
-            String formatted = "";
+            String formated = "";
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(s);
 
@@ -29,31 +29,27 @@ public class Format {
                 // Elimina los caracteres de escape innecesarios
                 String cleanedJsonString = textContent.replace("```json\\n", "")
                         .replace("\\n```", "")
-                        .replace("\\n", "\n")
+                        .replace("\\n", "")
                         .replace("\\\"", "\"")
                         .replace("```json", "")
                         .replace("```", "");
 
-                // Escapa solo las comillas internas dentro del valor del texto
-                cleanedJsonString = cleanedJsonString.replaceAll("(?<!\\\\)\"", "\\\\\"");
-
                 // Parsear el string limpio a un objeto JSON para formatearlo
                 JsonNode cleanedJsonNode = objectMapper.readTree(cleanedJsonString);
-                formatted = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cleanedJsonNode);
+                formated = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cleanedJsonNode);
 
                 // Imprimir el JSON formateado
-                System.out.println(formatted);
-                return formatted;
+                System.out.println(formated);
+                return formated;
             } else {
                 System.out.println("Campo 'text' no encontrado.");
                 return null;
             }
-        } catch (Exception e) {
+        }catch (Exception e){
             e.printStackTrace();
             return null;
         }
     }
-
 
     public String toStringCategorias(List<CategoryInDto> categoryInDtos){
         String toSring="";
