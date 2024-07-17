@@ -9,10 +9,11 @@ import java.util.List;
 
 @Service
 public class Format {
-    public String formatJsonQuestion(String s){
+
+    public String formatJsonQuestion(String s) {
         try {
             System.out.println(s);
-            String formated = "";
+            String formatted = "";
             ObjectMapper objectMapper = new ObjectMapper();
             JsonNode rootNode = objectMapper.readTree(s);
 
@@ -34,20 +35,23 @@ public class Format {
                         .replace("```json", "")
                         .replace("```", "");
 
+                // Escapa las comillas dobles dentro del valor del texto
+                cleanedJsonString = cleanedJsonString.replace("\"", "\\\"");
+
                 // Parsear el string limpio a un objeto JSON para formatearlo
                 JsonNode cleanedJsonNode = objectMapper.readTree(cleanedJsonString);
-                formated = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cleanedJsonNode);
+                formatted = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(cleanedJsonNode);
 
                 // Imprimir el JSON formateado
-                System.out.println(formated);
-                return formated;
+                System.out.println(formatted);
+                return formatted;
             } else {
-            System.out.println("Campo 'text' no encontrado.");
+                System.out.println("Campo 'text' no encontrado.");
+                return null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
             return null;
-        }
-        }catch (Exception e){
-        e.printStackTrace();
-        return null;
         }
     }
 
