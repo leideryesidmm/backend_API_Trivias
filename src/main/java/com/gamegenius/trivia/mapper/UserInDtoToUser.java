@@ -16,7 +16,7 @@ public class UserInDtoToUser implements IMapper<UserInDto, User>{
         user.setBirthdate(in.getBirthdate());
         user.setEmail(in.getEmail());
         user.setBombicoins(in.getBombicoins());
-        user.setMaximumstreak(in.getMaximumstreak());
+        user.setMaxScoreGK(in.getMaxScoreGK());
         return user;
     }
     @Override
@@ -29,7 +29,7 @@ public class UserInDtoToUser implements IMapper<UserInDto, User>{
         userInDto.setBirthdate(in.getBirthdate());
         userInDto.setEmail(in.getEmail());
         userInDto.setBombicoins(in.getBombicoins());
-        userInDto.setMaximumstreak(in.getMaximumstreak());
+        userInDto.setMaxScoreGK(in.getMaxScoreGK());
         return userInDto;
     }
 }

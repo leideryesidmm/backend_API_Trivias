@@ -15,5 +15,5 @@ public class UserInDto {
     private Date birthdate;
     private long bombicoins;
     private long bombicoinsObtenidas;
-    private int maximumstreak;
+    private int maxScoreGK;
 }

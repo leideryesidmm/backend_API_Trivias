@@ -141,7 +141,7 @@ public class Prueba {
         else return ResponseEntity.noContent().build();
     }
     @PatchMapping("/User/Score/{idUser},{idSubCategory},{score}")
-    public ResponseEntity unlockWildcard(@PathVariable("idUser") long idUser,
+    public ResponseEntity saveScoreSubcategory(@PathVariable("idUser") long idUser,
                                          @PathVariable("idSubCategory") long idSubCategory,
                                          @PathVariable("score") long score){
         try{
@@ -152,6 +152,16 @@ public class Prueba {
             return ResponseEntity.internalServerError().build();
         }
     }
+    @PatchMapping("/User/Score/{id},{maxScore}")
+    public ResponseEntity saveScoreGk(@PathVariable("id") Long id, @PathVariable("maxScore") int maxScore){
+        try{
+            return this.userService.saveScoreGk(id,maxScore);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 
     @GetMapping("/wildcard")
     public ResponseEntity<List<WildcardInDto>> getWildcards(){

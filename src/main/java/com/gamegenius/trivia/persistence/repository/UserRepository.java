@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Modifying
     @Query("UPDATE User s SET s.bombicoins=:newAmount WHERE s.id=:id")
     void subtractOrAddBombiCoins(@Param("id") long id, @Param("newAmount") long newAmount);
+    @Modifying
+    @Query("UPDATE User s SET s.maxScoreGK=:maxScore WHERE s.id=:id")
+    void saveMaxScoreGK(@Param("id") long id, @Param("maxScore") long maxScore);
 }

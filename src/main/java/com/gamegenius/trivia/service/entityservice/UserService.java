@@ -91,6 +91,23 @@ public class UserService {
             return ResponseEntity.internalServerError().build();
         }
     }
+    @Transactional
+        public ResponseEntity saveScoreGk(long id, int maxScore) {
+        try {
+            User user = this.repository.findById(id).orElse(null);
+            if (user != null) {
+                if(user.getMaxScoreGK()<maxScore){
+                    this.repository.saveMaxScoreGK(id,maxScore);
+                }
+                return ResponseEntity.ok().build();
+            } else {
+                return ResponseEntity.notFound().build();
+            }
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+    }
     public List<UserInDto> createTestDataUser(){
         try{
             List<UserInDto> userInDtos=new ArrayList<>();
@@ -100,7 +117,7 @@ public class UserService {
             userInDto.setNickname("Leider Martinez");
             userInDto.setEmail("leideryesidmm@gmail.com");
             userInDto.setBombicoins(110);
-            userInDto.setMaximumstreak(3);
+            userInDto.setMaxScoreGK(3);
             userInDto.setBombicoinsObtenidas(10);
             Date birthdate = new Date(2001, 1, 6);
             userInDto.setBirthdate(birthdate);
@@ -113,7 +130,7 @@ public class UserService {
             userInDto.setNickname("Jheyner Martinez02");
             userInDto.setEmail("jheyneryesidmm@gmail.com");
             userInDto.setBombicoins(120);
-            userInDto.setMaximumstreak(5);
+            userInDto.setMaxScoreGK(5);
             userInDto.setBombicoinsObtenidas(20);
             birthdate = new Date(2001, 1, 6);
             userInDto.setBirthdate(birthdate);
