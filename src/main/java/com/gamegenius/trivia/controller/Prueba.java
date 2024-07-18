@@ -24,20 +24,18 @@ public class Prueba {
     private final ChatGPTService chatGPTService;
     private final CategoryService categoryService;
     private final SubCategoryService subCategoryService;
-    private final QuestionService questionService;
     private final UserService userService;
     private final WildcardService wildcardService;
     private final UserWildcardService userWildcardService;
     private final ScoreService scoreService;
 
-    public Prueba(Format format, ApiService apiService, ChatgptService chatgptService, ChatGPTService chatGPTService, CategoryService categoryService, SubCategoryService subCategoryService, QuestionService questionService, UserService userService, WildcardService wildcardService, UserWildcardService userWildcardService, ScoreService scoreService) {
+    public Prueba(Format format, ApiService apiService, ChatgptService chatgptService, ChatGPTService chatGPTService, CategoryService categoryService, SubCategoryService subCategoryService, UserService userService, WildcardService wildcardService, UserWildcardService userWildcardService, ScoreService scoreService) {
         this.format = format;
         this.apiService = apiService;
         this.chatgptService = chatgptService;
         this.chatGPTService = chatGPTService;
         this.categoryService = categoryService;
         this.subCategoryService = subCategoryService;
-        this.questionService = questionService;
         this.userService = userService;
         this.wildcardService = wildcardService;
         this.userWildcardService = userWildcardService;
