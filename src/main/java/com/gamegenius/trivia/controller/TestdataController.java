@@ -1,15 +1,12 @@
 package com.gamegenius.trivia.controller;
 
-import com.gamegenius.trivia.persistence.entity.Answer;
 import com.gamegenius.trivia.persistence.entity.Category;
-import com.gamegenius.trivia.persistence.entity.Question;
 import com.gamegenius.trivia.persistence.entity.SubCategory;
 import com.gamegenius.trivia.service.dto.UserInDto;
 import com.gamegenius.trivia.service.dto.WildcardInDto;
 import com.gamegenius.trivia.service.entityservice.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -20,16 +17,12 @@ import java.util.List;
 public class TestdataController {
     private final CategoryService categoryService;
     private final SubCategoryService subCategoryService;
-    private final QuestionService questionService;
-    private final AnswerService answerService;
     private final UserService userService;
     private final WildcardService wildcardService;
 
-    public TestdataController(CategoryService categoryService, SubCategoryService subCategoryService, QuestionService questionService, AnswerService answerService, UserService userService, WildcardService wildcardService) {
+    public TestdataController(CategoryService categoryService, SubCategoryService subCategoryService, UserService userService, WildcardService wildcardService) {
         this.categoryService = categoryService;
         this.subCategoryService = subCategoryService;
-        this.questionService = questionService;
-        this.answerService = answerService;
         this.userService = userService;
         this.wildcardService = wildcardService;
     }
@@ -49,20 +42,6 @@ public class TestdataController {
         else return ResponseEntity.internalServerError().build();
     }
 
-    @PostMapping("/Question")
-    public ResponseEntity<List<Question>> createQuestionTestData(){
-        List<Question> questions=this.questionService.createTestDataQuestion();
-        if(questions!=null)
-            return ResponseEntity.ok(questions);
-        else return ResponseEntity.internalServerError().build();
-    }
-    @PostMapping("/Answer")
-    public ResponseEntity<List<Answer>> createAnswerTestData(){
-        List<Answer> answers=this.answerService.createTestDataAnswer();
-        if(answers!=null)
-            return ResponseEntity.ok(answers);
-        else return ResponseEntity.internalServerError().build();
-    }
     @PostMapping("/User")
     public ResponseEntity<List<UserInDto>> createUserTestData(){
         List<UserInDto> userInDto=this.userService.createTestDataUser();
@@ -82,10 +61,7 @@ public class TestdataController {
         try{
             createCategoryTestData();
             createSubCategoryTestData();
-            createQuestionTestData();
-            createAnswerTestData();
             createWildcardsTestData();
-            createUserTestData();
             return ResponseEntity.ok().build();
         }catch (Exception e){
             e.printStackTrace();

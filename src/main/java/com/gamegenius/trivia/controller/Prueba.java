@@ -25,13 +25,12 @@ public class Prueba {
     private final CategoryService categoryService;
     private final SubCategoryService subCategoryService;
     private final QuestionService questionService;
-    private final AnswerService answerService;
     private final UserService userService;
     private final WildcardService wildcardService;
     private final UserWildcardService userWildcardService;
     private final ScoreService scoreService;
 
-    public Prueba(Format format, ApiService apiService, ChatgptService chatgptService, ChatGPTService chatGPTService, CategoryService categoryService, SubCategoryService subCategoryService, QuestionService questionService, AnswerService answerService, UserService userService, WildcardService wildcardService, UserWildcardService userWildcardService, ScoreService scoreService) {
+    public Prueba(Format format, ApiService apiService, ChatgptService chatgptService, ChatGPTService chatGPTService, CategoryService categoryService, SubCategoryService subCategoryService, QuestionService questionService, UserService userService, WildcardService wildcardService, UserWildcardService userWildcardService, ScoreService scoreService) {
         this.format = format;
         this.apiService = apiService;
         this.chatgptService = chatgptService;
@@ -39,7 +38,6 @@ public class Prueba {
         this.categoryService = categoryService;
         this.subCategoryService = subCategoryService;
         this.questionService = questionService;
-        this.answerService = answerService;
         this.userService = userService;
         this.wildcardService = wildcardService;
         this.userWildcardService = userWildcardService;
@@ -84,47 +82,7 @@ public class Prueba {
         System.out.println(subCategoryInDto);
         return ResponseEntity.ok(subCategoryInDto);
     }
-    @PostMapping("/Question")
-    public ResponseEntity<Question> createQuestion(@RequestBody QuestionInDto questionInDto){
-        Question question=this.questionService.createQuestion(questionInDto);
-        if(question!=null)
-            return ResponseEntity.ok(question);
-        else return ResponseEntity.internalServerError().build();
-    }
-    @GetMapping("/Question/{id}")
-    public ResponseEntity<QuestionInDto> getQuestion(@PathVariable("id") long idQuestion){
-        QuestionInDto questionInDto=this.questionService.getQuestion(idQuestion);
-        System.out.println(questionInDto);
-        return ResponseEntity.ok(questionInDto);
-    }
 
-    @GetMapping("/Question/Random2/{id},{dificultad}")
-    public ResponseEntity<QuestionInDto> getQuestionRandom(@PathVariable("id") long id, @PathVariable("dificultad") short dificultad){
-        try {
-            QuestionInDto questionInDto = this.questionService.getQuestionRamdon(id,dificultad);
-            questionInDto.setAnswers(this.answerService.getAllAnswer(questionInDto.getIdQuestion()));
-            System.out.println(questionInDto);
-
-            return ResponseEntity.ok(questionInDto);
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-            return null;
-        }
-    }
-
-    @PostMapping("/Answer")
-    public ResponseEntity<Answer> createAnswer(@RequestBody AnswerInDto answerInDto){
-        Answer answer=this.answerService.createAnswer(answerInDto);
-        if(answer!=null)
-            return ResponseEntity.ok(answer);
-        else return ResponseEntity.internalServerError().build();
-    }
-    @GetMapping("/Answer/{id}")
-    public ResponseEntity<List<AnswerInDto>> getAllAnswer(@PathVariable long id){
-        List<AnswerInDto> answersInDtos=this.answerService.getAllAnswer(id);
-        System.out.println(answersInDtos);
-        return ResponseEntity.ok(answersInDtos);
-    }
     @PostMapping("/User")
     public ResponseEntity<UserInDto> createUser(@RequestBody UserInDto userInDto){
         System.out.println("entroooooooooooooooooooooooooooooooooooooooooo");
